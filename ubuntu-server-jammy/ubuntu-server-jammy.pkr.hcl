@@ -86,7 +86,7 @@ source "proxmox" "ubuntu-server-jammy" {
     boot_wait = "5s"
 
     # PACKER Autoinstall Settings
-    http_directory = "http" 
+    http_directory = "./ubuntu-server-jammy/http" 
     # (Optional) Bind IP Address and Port
     # http_bind_address = "0.0.0.0"
     # http_port_min = 8802
