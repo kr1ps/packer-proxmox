@@ -1,11 +1,11 @@
 # packer-proxmox-iso
 
-This repo builds automatically Ubuntu VM templates (Ubuntu 20.04, 21.04) for Proxmox  environment using Hashicorp's Packer and downloads ISOs automatically.  
+This repo builds automatically Ubuntu VM templates (Ubuntu 22.04) for Proxmox  environment using Hashicorp's Packer and downloads ISOs automatically.  
 
 With this repo VM templates for the following Ubuntu systems can be built.
 
-- Ubuntu Server 20.04
-- Ubuntu Server 21.04
+- Ubuntu Server 22.04
+
 
 Ubuntu ISO files gets download automatically from public sources.
 
