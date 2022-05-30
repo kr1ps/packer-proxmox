@@ -89,10 +89,10 @@ source "proxmox" "ubuntu-server-jammy" {
     http_directory = "./ubuntu-server-jammy/http" 
 
 
-    ssh_username = "admincc"
+    ssh_username = "test"
 
     # (Option 1) Add your Password here
-    ssh_password = "password"
+    ssh_password = "test"
     # - or -
     # (Option 2) Add your Private SSH KEY file here
     # ssh_private_key_file = "~/.ssh/id_rsa"
