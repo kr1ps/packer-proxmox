@@ -27,14 +27,14 @@ source "proxmox" "ubuntu-server-jammy" {
     # insecure_skip_tls_verify = true
     
     # VM General Settings
-    node = "your-proxmox-node"
-    vm_id = "100"
+    node = "mothership"
+    vm_id = "5000"
     vm_name = "ubuntu-server-jammy"
     template_description = "Ubuntu Server jammy Image"
 
     # VM OS Settings
     # (Option 1) Local ISO File
-    # iso_file = "local:iso/ubuntu-22.04-live-server-amd64.iso"
+    iso_file = "local:iso/ubuntu-22.04-live-server-amd64.iso"
     # - or -
     # (Option 2) Download ISO
     # iso_url = "https://releases.ubuntu.com/22.04/ubuntu-22.04-live-server-amd64.iso"
@@ -49,29 +49,29 @@ source "proxmox" "ubuntu-server-jammy" {
     scsi_controller = "virtio-scsi-pci"
 
     disks {
-        disk_size = "20G"
+        disk_size = "50G"
         format = "qcow2"
-        storage_pool = "local-lvm"
-        storage_pool_type = "lvm"
+        storage_pool = "ssd-thin"
+        storage_pool_type = "lvmthin"
         type = "virtio"
     }
 
     # VM CPU Settings
-    cores = "1"
+    cores = "4"
     
     # VM Memory Settings
-    memory = "2048" 
+    memory = "4096" 
 
     # VM Network Settings
     network_adapters {
         model = "virtio"
-        bridge = "vmbr0"
+        bridge = "vmbr100"
         firewall = "false"
     } 
 
     # VM Cloud-Init Settings
     cloud_init = true
-    cloud_init_storage_pool = "local-lvm"
+    cloud_init_storage_pool = "ssd-thin"
 
     # PACKER Boot Commands
     boot_command = [
@@ -92,7 +92,7 @@ source "proxmox" "ubuntu-server-jammy" {
     # http_port_min = 8802
     # http_port_max = 8802
 
-    ssh_username = "your-user-name"
+    ssh_username = "admincc"
 
     # (Option 1) Add your Password here
     # ssh_password = "your-password"

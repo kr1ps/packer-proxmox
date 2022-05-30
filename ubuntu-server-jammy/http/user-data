@@ -3,7 +3,7 @@ autoinstall:
   version: 1
   locale: en_US
   keyboard:
-    layout: de
+    layout: us
   ssh:
     install-server: true
     allow-pw: true
@@ -20,9 +20,9 @@ autoinstall:
       size: 0
   user-data:
     package_upgrade: false
-    timezone: Europe/Berlin
+    timezone: America/new_york
     users:
-      - name: your-user-name
+      - name: admincc
         groups: [adm, sudo]
         lock-passwd: false
         sudo: ALL=(ALL) NOPASSWD:ALL
