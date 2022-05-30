@@ -1,0 +1,37 @@
+# Name or IP of you vCenter Server
+vsphere_server          = "vcsa.kr1ps.com"
+
+# vsphere username
+vsphere_username        = "administrator@kr1ps.com"
+
+# vsphere password
+vsphere_password        = "123456"
+
+# vsphere datacenter name
+vsphere_datacenter      = "kr1ps-DC"
+
+# name or IP of the ESXi host
+vsphere_host            = "esx-02.kr1ps.com"
+
+# vsphere network
+vsphere_network         = "server-net"
+
+# vsphere datastore
+vsphere_datastore       = "LocalSSD-esx-02"
+
+# vsphere folder
+vcenter_folder                  = "Templates"
+
+
+
+# cloud_init files for unattended configuration for Ubuntu
+cloudinit_files         = ["./http/user-data","./http/meta-data"]
+
+# final clean up script
+shell_scripts           = ["./setup/setup.sh"]
+
+# SSH username (created in user-data. If you change it here the please also adjust in ./html/user-data)
+ssh_username            = "test"
+
+# SSH password (created in autounattend.xml. If you change it here the please also adjust in ./html/user-data)
+ssh_password            = "test"
