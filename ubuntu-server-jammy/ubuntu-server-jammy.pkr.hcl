@@ -50,7 +50,7 @@ source "proxmox" "ubuntu-server-jammy" {
 
     disks {
         disk_size = "50G"
-        format = "qcow2"
+        #format = "qcow2"
         storage_pool = "ssd-thin"
         storage_pool_type = "lvmthin"
         type = "virtio"
