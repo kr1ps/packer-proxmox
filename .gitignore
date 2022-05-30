@@ -3,3 +3,4 @@ packer.log
 variables.auto.pkrvars.hcl
 http/user-data
 old
+credentials.pkr.hcl
