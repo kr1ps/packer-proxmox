@@ -29,7 +29,7 @@ source "proxmox" "ubuntu-server-template" {
     # VM General Settings
     node = "mothership"
     #vm_id = "100"
-    vm_name = "ubuntu-server-template"
+    vm_name = "ubuntu-server-2204-template"
     template_description = "Ubuntu Server jammy Image"
 
     # VM OS Settings
