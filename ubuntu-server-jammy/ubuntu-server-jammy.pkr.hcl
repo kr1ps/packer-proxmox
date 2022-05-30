@@ -24,7 +24,7 @@ source "proxmox" "ubuntu-server-jammy" {
     username = "${var.proxmox_api_token_id}"
     token = "${var.proxmox_api_token_secret}"
     # (Optional) Skip TLS Verification
-    #insecure_skip_tls_verify = true
+    insecure_skip_tls_verify = true
     
     # VM General Settings
     node = "mothership"
