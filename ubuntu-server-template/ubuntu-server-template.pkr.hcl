@@ -17,24 +17,24 @@ variable "proxmox_api_token_secret" {
 }
 
 # Resource Definiation for the VM Template
-source "proxmox" "ubuntu-server-jammy" {
+source "proxmox" "ubuntu-server-template" {
  
     # Proxmox Connection Settings
     proxmox_url = "${var.proxmox_api_url}"
     username = "${var.proxmox_api_token_id}"
     token = "${var.proxmox_api_token_secret}"
     # (Optional) Skip TLS Verification
-    # insecure_skip_tls_verify = true
+    insecure_skip_tls_verify = true
     
     # VM General Settings
-    node = "your-proxmox-node"
-    vm_id = "100"
-    vm_name = "ubuntu-server-jammy"
+    node = "mothership"
+    #vm_id = "100"
+    vm_name = "ubuntu-server-template"
     template_description = "Ubuntu Server jammy Image"
 
     # VM OS Settings
     # (Option 1) Local ISO File
-    # iso_file = "local:iso/ubuntu-22.04-live-server-amd64.iso"
+    iso_file = "local:iso/ubuntu-22.04-live-server-amd64.iso"
     # - or -
     # (Option 2) Download ISO
     # iso_url = "https://releases.ubuntu.com/22.04/ubuntu-22.04-live-server-amd64.iso"
@@ -49,29 +49,29 @@ source "proxmox" "ubuntu-server-jammy" {
     scsi_controller = "virtio-scsi-pci"
 
     disks {
-        disk_size = "20G"
-        format = "qcow2"
-        storage_pool = "local-lvm"
-        storage_pool_type = "lvm"
+        disk_size = "50G"
+        format = "raw"
+        storage_pool = "ssd-thin"
+        storage_pool_type = "lvmthin"
         type = "virtio"
     }
 
     # VM CPU Settings
-    cores = "1"
+    cores = "4"
     
     # VM Memory Settings
-    memory = "2048" 
+    memory = "4096" 
 
     # VM Network Settings
     network_adapters {
         model = "virtio"
-        bridge = "vmbr0"
+        bridge = "vmbr100"
         firewall = "false"
     } 
 
     # VM Cloud-Init Settings
     cloud_init = true
-    cloud_init_storage_pool = "local-lvm"
+    cloud_init_storage_pool = "ssd-thin"
 
     # PACKER Boot Commands
     boot_command = [
@@ -86,16 +86,13 @@ source "proxmox" "ubuntu-server-jammy" {
     boot_wait = "5s"
 
     # PACKER Autoinstall Settings
-    http_directory = "http" 
-    # (Optional) Bind IP Address and Port
-    # http_bind_address = "0.0.0.0"
-    # http_port_min = 8802
-    # http_port_max = 8802
+    http_directory = "./ubuntu-server-template/http" 
 
-    ssh_username = "your-user-name"
+
+    ssh_username = "test"
 
     # (Option 1) Add your Password here
-    # ssh_password = "your-password"
+    ssh_password = "test"
     # - or -
     # (Option 2) Add your Private SSH KEY file here
     # ssh_private_key_file = "~/.ssh/id_rsa"
@@ -107,8 +104,8 @@ source "proxmox" "ubuntu-server-jammy" {
 # Build Definition to create the VM Template
 build {
 
-    name = "ubuntu-server-jammy"
-    sources = ["source.proxmox.ubuntu-server-jammy"]
+    name = "ubuntu-server-template"
+    sources = ["source.proxmox.ubuntu-server-template"]
 
     # Provisioning the VM Template for Cloud-Init Integration in Proxmox #1
     provisioner "shell" {
@@ -127,7 +124,7 @@ build {
 
     # Provisioning the VM Template for Cloud-Init Integration in Proxmox #2
     provisioner "file" {
-        source = "files/99-pve.cfg"
+        source = "./ubuntu-server-template/files/99-pve.cfg"
         destination = "/tmp/99-pve.cfg"
     }
 
@@ -136,14 +133,6 @@ build {
         inline = [ "sudo cp /tmp/99-pve.cfg /etc/cloud/cloud.cfg.d/99-pve.cfg" ]
     }
 
-    # Provisioning the VM Template with Docker Installation #4
-    provisioner "shell" {
-        inline = [
-            "sudo apt-get install -y ca-certificates curl gnupg lsb-release",
-            "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg",
-            "echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null",
-            "sudo apt-get -y update",
-            "sudo apt-get install -y docker-ce docker-ce-cli containerd.io"
-        ]
-    }
+    # Add additional provisioning scripts here
+    # ...
 }

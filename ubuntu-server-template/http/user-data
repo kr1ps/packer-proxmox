@@ -3,7 +3,12 @@ autoinstall:
   version: 1
   locale: en_US
   keyboard:
-    layout: de
+    layout: en
+    variant: us
+  identity:
+    hostname: ubuntu-server
+    username: test
+    password: '$1$UZ98AsZd$rGDJCk4lArnMAqsoEiPAL0'
   ssh:
     install-server: true
     allow-pw: true
@@ -15,19 +20,12 @@ autoinstall:
     - sudo
   storage:
     layout:
-      name: direct
-    swap:
-      size: 0
+      name: lvm
   user-data:
     package_upgrade: false
     timezone: America/Santo_Domingo
     users:
-      - name: your-user-name
+      - name: test
         groups: [adm, sudo]
-        lock-passwd: false
         sudo: ALL=(ALL) NOPASSWD:ALL
         shell: /bin/bash
-        # passwd: your-password
-        # - or -
-        # ssh_authorized_keys:
-        #   - your-ssh-key
