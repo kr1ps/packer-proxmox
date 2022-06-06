@@ -29,7 +29,7 @@ autoinstall:
         - apt-transport-https
         - ca-certificates
         - curl
-        - gnupg-agent
+        - sudo
         - software-properties-common
         - ufw
         - unzip
@@ -43,7 +43,7 @@ autoinstall:
     late-commands:
         - sed -i -e 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /target/etc/ssh/sshd_config
         - sed -i -e 's/^#\?PermitRootLogin.*/PermitRootLogin yes/g' /target/etc/ssh/sshd_config
-        - echo 'krips ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/krips
-        - curtin in-target --target=/target -- chmod 440 /etc/sudoers.d/krips
+        - echo 'test ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/test
+        - curtin in-target --target=/target -- chmod 440 /etc/sudoers.d/test
         - curtin in-target --target=/target -- apt-get update
         - curtin in-target --target=/target -- apt-get upgrade --yes
