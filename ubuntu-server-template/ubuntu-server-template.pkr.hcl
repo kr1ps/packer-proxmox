@@ -27,14 +27,14 @@ source "proxmox" "ubuntu-server-template" {
     insecure_skip_tls_verify = true
     
     # VM General Settings
-    node = "mothership"
+    node = "pve01"
     #vm_id = "100"
     vm_name = "ubuntu-server-2204-template"
     template_description = "Ubuntu Server jammy Image"
 
     # VM OS Settings
     # (Option 1) Local ISO File
-    iso_file = "local:iso/ubuntu-22.04-live-server-amd64.iso"
+    iso_file = "local:iso/ubuntu-22.04.1-server-amd64.iso"
     # - or -
     # (Option 2) Download ISO
     # iso_url = "https://releases.ubuntu.com/22.04/ubuntu-22.04-live-server-amd64.iso"
@@ -49,9 +49,9 @@ source "proxmox" "ubuntu-server-template" {
     scsi_controller = "virtio-scsi-pci"
 
     disks {
-        disk_size = "50G"
+        disk_size = "120G"
         format = "raw"
-        storage_pool = "ssd-thin"
+        storage_pool = "local-lvm"
         storage_pool_type = "lvmthin"
         type = "virtio"
     }
@@ -65,13 +65,13 @@ source "proxmox" "ubuntu-server-template" {
     # VM Network Settings
     network_adapters {
         model = "virtio"
-        bridge = "vmbr100"
+        bridge = "vmbr0"
         firewall = "false"
     } 
 
     # VM Cloud-Init Settings
     cloud_init = true
-    cloud_init_storage_pool = "ssd-thin"
+    cloud_init_storage_pool = "local-lvm"
 
     # PACKER Boot Commands
     boot_command = [
@@ -87,6 +87,8 @@ source "proxmox" "ubuntu-server-template" {
 
     # PACKER Autoinstall Settings
     http_directory = "./ubuntu-server-template/http" 
+    http_bind_address = "172.18.0.237"
+    
 
 
     ssh_username = "test"
